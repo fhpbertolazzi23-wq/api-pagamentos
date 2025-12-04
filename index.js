@@ -1,9 +1,13 @@
 const express = require('express');
-const cors = require('cors'); // opcional, mas útil se precisar
+const cors = require('cors'); 
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+app.get("/", (req, res) => {
+  res.send("API de Pagamentos está online.");
+});
 
 app.post('/pagamento', async (req, res) => {
   try {
@@ -15,7 +19,7 @@ app.post('/pagamento', async (req, res) => {
       return res.status(400).json({ error: "Pagamento não confirmado" });
     }
 
-    // Aqui você chama a API do colega para matricular
+    // chama a API do colega para matricular
     // await axios.post('https://api-do-colega.com/matriculas', { userId, courseId });
 
     return res.json({
@@ -29,6 +33,7 @@ app.post('/pagamento', async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log("API de pagamentos rodando na porta 3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("API de pagamentos rodando na porta " + PORT);
 });
